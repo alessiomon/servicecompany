@@ -35,7 +35,7 @@ public interface UserService {
 
 
 
-
+/*
 
     User addCompanyOwner(CompanyOwner companyOwner);
 
@@ -47,4 +47,6 @@ public interface UserService {
     User editCompanyOwner(Long id, CompanyOwner companyOwner);
     User addEmployeetoCompany(Long companyId , Long employeeId);
     User removeEmployeefromCompany(Long companyId , Long employeeId);
+
+ */
 }

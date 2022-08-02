@@ -75,33 +75,4 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User addCompanyOwner(CompanyOwner companyOwner) {
-        return null;
-    }
-
-    @Override
-    public User getCompanyOwnerbyId(Long companyId) {
-        return null;
-    }
-
-    @Override
-    public void deleteCompany(Long id) {
-
-    }
-
-    @Override
-    public User editCompanyOwner(Long id, CompanyOwner companyOwner) {
-        return null;
-    }
-
-    @Override
-    public User addEmployeetoCompany(Long companyId, Long employeeId) {
-        return null;
-    }
-
-    @Override
-    public User removeEmployeefromCompany(Long companyId, Long employeeId) {
-        return null;
-    }
 }
