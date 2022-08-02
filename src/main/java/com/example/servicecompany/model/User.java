@@ -6,9 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
+@Data
 @MappedSuperclass
 public abstract class  User {
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

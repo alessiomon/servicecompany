@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "Employee_user")
+@Entity
+@Table(name = "Employee_user")
 @NoArgsConstructor
 @Data
 public class Employee extends User {
@@ -19,7 +20,7 @@ public class Employee extends User {
     private double salary;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "companyOwner_id")
     private CompanyOwner companyOwner;
 

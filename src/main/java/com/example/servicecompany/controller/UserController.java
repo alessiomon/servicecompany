@@ -1,81 +1,75 @@
 package com.example.servicecompany.controller;
 
-import com.example.servicecompany.model.Admin;
-
 import com.example.servicecompany.model.CompanyOwner;
-import com.example.servicecompany.sevice.CompanyOwnerService;
-import com.example.servicecompany.sevice.EmployeeService;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.IDToken;
+import com.example.servicecompany.model.Employee;
+import com.example.servicecompany.model.User;
+import com.example.servicecompany.sevice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.security.RolesAllowed;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/company")
-public class CompanyController {
+@RequestMapping("/user")
+public class UserController {
+
     @Autowired
-    private EmployeeService employeeService;
-
-    private CompanyOwnerService companyOwnerService;
-
-    public CompanyController(CompanyOwnerService companyOwnerService, EmployeeService employeeService)
-    {
-        super();
-        this.companyOwnerService = companyOwnerService;
-        this.employeeService= employeeService;
-    }
+    private UserService userService;
 
 
 
-    /// GET ALL COMPANY
+    /// GET ALL USER
     @GetMapping
-    ///@PreAuthorize("hasRole('" + Admin.roleName +")")
-    @RolesAllowed("admin")
-    public ResponseEntity<List<CompanyOwner>> loadAllCompanies()
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<List<User>> loadAllUser()
     {
-        return ResponseEntity.ok(companyOwnerService.getAllCompanyOwner());
+        return ResponseEntity.ok(userService.getAllUser());
     }
 
 
-    /// GET A SPECIFIC COMPANY
-    @GetMapping("/{company_id}")
-    @PreAuthorize ("hasRole('"+CompanyOwner.roleName+"')" + "|| hasRole('" + Admin.roleName + "')")
-    public ResponseEntity<CompanyOwner> getCompanyOwnerbyId(@PathVariable ("company_id")  Long company_id ) throws AccessDeniedException{
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof Admin){
-            if(((Admin)principal).getCompanyOwnersManagedByTheAdmin().contains(companyOwnerService.getCompanyOwnerbyId(company_id)))
-                return ResponseEntity.ok(companyOwnerService.getCompanyOwnerbyId(company_id));
+    /// GET All COMPANY
+    @GetMapping("/company")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<List<User>> loadAllCompany(){
+        return ResponseEntity.ok(userService.getALLCompanyOwner());
+    }
+
+
+    @GetMapping("company/{company_id}")
+    @PreAuthorize ("hasRole('admin') || hasRole('companyOwner')")
+    public ResponseEntity<User> getCompanyOwnerbyId(@PathVariable ("company_id")  Long company_id ) throws AccessDeniedException{
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if(principal instanceof CompanyOwner){
+            if(((CompanyOwner)principal).equals(userService.getCompany(company_id)))
+                return ResponseEntity.ok(userService.getCompany(company_id));
             else throw new AccessDeniedException("Access denied");
         }
 
-        return ResponseEntity.ok(companyOwnerService.getCompanyOwnerbyId(company_id));
+        return ResponseEntity.ok(userService.getCompany(company_id));
         }
 
     // DELETE COMPANY
 
-    @DeleteMapping("/{company_id}")
-    @PreAuthorize("hasRole('" + Admin.roleName + "')")
-    public ResponseEntity<String> deleteCompany (@PathVariable("company_id") Long id)
+    @DeleteMapping("company/{company_id}")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<String> deleteUser (@PathVariable("company_id") Long id)
     {
-        companyOwnerService.deleteCompany(id);
+        userService.deleteUser(id);
         return new ResponseEntity<String>("Company deleted succesfully", HttpStatus.OK);
     }
 
     /// ADD COMPANY
 
-
+/*
     @PostMapping()
     @PreAuthorize("hasRole('" + Admin.roleName +")")
     public ResponseEntity<CompanyOwner> addCompanyowner(@RequestBody CompanyOwner companyOwner)
@@ -114,12 +108,14 @@ public class CompanyController {
         return new ResponseEntity<CompanyOwner>(companyOwnerService.removeEmployeefromCompany(companyId, employeeId), HttpStatus.OK);
     }
 
+
+ */
 }
 /*
     private CompanyOwnerService companyOwnerService;
     private Admin admin;
 
-    public CompanyController(CompanyOwnerService companyOwnerService) {
+    public UserController(CompanyOwnerService companyOwnerService) {
         super();
         this.companyOwnerService = companyOwnerService;
     }

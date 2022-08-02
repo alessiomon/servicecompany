@@ -6,12 +6,14 @@ import com.example.servicecompany.model.Employee;
 import com.example.servicecompany.model.User;
 import com.example.servicecompany.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -27,7 +29,9 @@ public class UserServiceImpl implements UserService {
                 new Employee("mak", 55000),
                 new Employee("peter", 120000)
         ).collect(Collectors.toList()));
-    }
+}
+
+
 
     @Override
     public List<User> getAllUser() {

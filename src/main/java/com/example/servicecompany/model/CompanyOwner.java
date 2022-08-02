@@ -20,10 +20,7 @@ public class CompanyOwner extends User{
 
 
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "employees_Of_The_Company",
-            joinColumns = @JoinColumn(name = "companyOwner_id"),
-            inverseJoinColumns = @JoinColumn(name = "Employee_id"))
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "companyOwner")
     private List<Employee> employeesOfTheCompany= new ArrayList<>();
 
     public CompanyOwner(String name){
