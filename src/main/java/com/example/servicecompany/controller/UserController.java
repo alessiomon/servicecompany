@@ -59,9 +59,9 @@ public class UserController {
 
     // DELETE COMPANY
 
-    @DeleteMapping("company/{company_id}")
+    @DeleteMapping("/{user_id}")
     @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<String> deleteUser (@PathVariable("company_id") Long id)
+    public ResponseEntity<String> deleteUser (@PathVariable("user_id") Long id)
     {
         userService.deleteUser(id);
         return new ResponseEntity<String>("Company deleted succesfully", HttpStatus.OK);
