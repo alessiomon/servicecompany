@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void initializeTable();
+   /// void initializeTable();
 
     ///get list
     List<User> getAllUser();

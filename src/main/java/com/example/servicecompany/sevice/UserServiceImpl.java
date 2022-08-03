@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository repo;
 
-    @PostConstruct
+  /*  @PostConstruct
     public void initializeTable() {
         repo.saveAll(
                 Stream.of(
@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
                 new Employee("peter", 120000)
         ).collect(Collectors.toList()));
 }
+
+   */
 
 
 

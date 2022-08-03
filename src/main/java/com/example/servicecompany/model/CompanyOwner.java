@@ -7,7 +7,8 @@ import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
+
 @Table(name = "companyOwner_user")
 @NoArgsConstructor
 @Data

@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+
 @Table(name = "Employee_user")
 @NoArgsConstructor
-@Data
 public class Employee extends User {
 
     @Column(name = "name")

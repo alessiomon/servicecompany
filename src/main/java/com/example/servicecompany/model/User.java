@@ -6,15 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 @Data
-@MappedSuperclass
+@Entity(name="User")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class  User {
 
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     Long id;
 
     @Column(name = "roleName")
