@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
+@Entity
 @Table(name = "companyOwner_user")
 @NoArgsConstructor
 @Data
@@ -21,7 +21,7 @@ public class CompanyOwner extends User{
 
 
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "companyOwner")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "companyOwner")
     private List<Employee> employeesOfTheCompany= new ArrayList<>();
 
     public CompanyOwner(String name){
