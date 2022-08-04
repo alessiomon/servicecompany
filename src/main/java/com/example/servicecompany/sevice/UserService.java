@@ -6,6 +6,7 @@ import com.example.servicecompany.model.User;
 import org.keycloak.jose.jwk.JWK;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -18,17 +19,17 @@ public interface UserService {
 
 
     ///get by id
-    User getUserbyId(Long id);
+    User getUserbyId(int id);
 
-    User getEmployee(Long id);
+   /// User getEmployee(Long id);
 
-    User getCompany(Long id);
+   /// User getCompany(Long id);
 
     ///Add
     User addCompany(CompanyOwner companyOwner);
     User addEmployee(Employee employee);
 
-    void deleteUser(Long id);
+    void deleteUser(int id);
 
 
 

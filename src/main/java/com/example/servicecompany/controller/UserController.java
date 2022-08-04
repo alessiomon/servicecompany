@@ -4,17 +4,18 @@ import com.example.servicecompany.model.CompanyOwner;
 import com.example.servicecompany.model.Employee;
 import com.example.servicecompany.model.User;
 import com.example.servicecompany.sevice.UserService;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class UserController {
 
 
     /// GET ALL USER
-    @GetMapping
+    @GetMapping()
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<List<User>> loadAllUser()
     {
@@ -43,29 +44,44 @@ public class UserController {
     }
 
 
-    @GetMapping("company/{company_id}")
-    @PreAuthorize ("hasRole('admin') || hasRole('companyOwner')")
-    public ResponseEntity<User> getCompanyOwnerbyId(@PathVariable ("company_id")  Long company_id ) throws AccessDeniedException{
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if(principal instanceof CompanyOwner){
-            if(((CompanyOwner)principal).equals(userService.getCompany(company_id)))
-                return ResponseEntity.ok(userService.getCompany(company_id));
-            else throw new AccessDeniedException("Access denied");
-        }
-
-        return ResponseEntity.ok(userService.getCompany(company_id));
-        }
-
-    // DELETE COMPANY
-
-    @DeleteMapping("/{user_id}")
+    ///GET ALL EMPLOYEES
+ /*   @GetMapping("/employee")
     @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<String> deleteUser (@PathVariable("user_id") Long id)
+    public ResponseEntity<List<User>> loadAllEmployee(){
+        return ResponseEntity.ok(userService.getALLEmployees());
+    }
+    */
+
+    ///Da rifare
+   @GetMapping("/{company_id}")
+   @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<User>getUserId(@PathVariable ("company_id")   int company_id ) throws AccessDeniedException {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if( principal instanceof User){
+        if (((User) principal).getId()==company_id)
+            return ResponseEntity.ok(userService.getUserbyId(company_id));
+        else throw new AccessDeniedException("Access denied");
+    }
+     return ResponseEntity.ok(userService.getUserbyId(company_id));
+        }
+
+
+
+
+    // DELETE USER
+
+  /*  @DeleteMapping("{user_id}")
+    public ResponseEntity<String> deleteUserid(@PathVariable("user_id") Long user_id)
     {
-        userService.deleteUser(id);
+        userService.deleteUser(user_id);
         return new ResponseEntity<String>("Company deleted succesfully", HttpStatus.OK);
     }
+
+
+   */
+
+
 
     /// ADD COMPANY
 

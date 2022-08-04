@@ -16,11 +16,11 @@ public abstract class  User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private int id;
 
     @Column(name = "roleName")
     public String roleName;
-    public Long getId(){
+    public int getId(){
         return id;
     }
 

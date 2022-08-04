@@ -51,11 +51,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserbyId(Long id) {
+    public User getUserbyId(int id) {
+
         return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User" , "Id", id));
     }
 
-    @Override
+  /*  @Override
     public User getEmployee(Long id) {
         return null;
     }
@@ -64,6 +65,9 @@ public class UserServiceImpl implements UserService {
     public User getCompany(Long id) {
         return null;
     }
+
+
+   */
 
     @Override
     public User addCompany(CompanyOwner companyOwner) {
@@ -76,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUser(int id) {
         repo.deleteById(id);
 
     }

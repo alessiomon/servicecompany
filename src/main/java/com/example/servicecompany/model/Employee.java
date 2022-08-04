@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "Employee_user")
 @NoArgsConstructor
+@Data
 public class Employee extends User {
 
     @Column(name = "name")
@@ -19,7 +20,7 @@ public class Employee extends User {
     private double salary;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "companyOwner_id")
     private CompanyOwner companyOwner;
 

@@ -18,9 +18,6 @@ public class CompanyOwner extends User{
     private String name;
 
 
-
-
-
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "companyOwner")
     private List<Employee> employeesOfTheCompany= new ArrayList<>();
 
